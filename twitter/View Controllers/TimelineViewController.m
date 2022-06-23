@@ -14,6 +14,7 @@
 #import "Tweet.h"
 #import "UIImageView+AFNetworking.h"
 #import "ComposeViewController.h"
+#import "DetailViewController.h"
 
 
 @interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -43,18 +44,18 @@
 - (void) fetchTweets {
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
-            self.arrayOfTweets = tweets;
             NSLog(@"😎😎😎 Successfully loaded home timeline");
             for (Tweet *tweet in tweets) {
                 NSString *text = tweet.text;
                 NSLog(@"%@", text);
+                self.arrayOfTweets = (NSMutableArray *)tweets;
+                
+                [self.tableView reloadData];
             }
-        
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
     
-        [self.tableView reloadData];
     }];
     [self.refreshControl endRefreshing];
 }
@@ -106,9 +107,19 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"showDetails"]){
+        TweetCell *cell = sender;
+        NSIndexPath *indexpath = [self.tableView indexPathForCell:cell];
+        Tweet *dataToPass = self.arrayOfTweets[indexpath.row];
+        DetailViewController *detailVC = [segue destinationViewController];
+        detailVC.tweeter = dataToPass;
+
+        
+    }else{
    UINavigationController *navigationController = [segue destinationViewController];
    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
    composeController.delegate = self;
+    }
 }
     
 @end
