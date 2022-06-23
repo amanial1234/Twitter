@@ -8,6 +8,8 @@
 
 #import "TweetCell.h"
 #import "APIManager.h"
+#import "Tweet.h"
+#import "TimelineViewController.h"
 
 @implementation TweetCell
 
@@ -22,20 +24,50 @@
     // Configure the view for the selected state
 }
 - (IBAction)didTapFavorite:(id)sender {
-    // TODO: Update the local tweet model
+    
     self.tweet.favorited = YES;
     self.tweet.favoriteCount += 1;
-}
-
--(void)favorite{
+    
     [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
         if(error){
              NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
         }
         else{
             NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
+            self.tweet = tweet;
+            [self refreshView];
         }
     }];
 }
+- (IBAction)didTapReTweet:(id)sender {
+    
+    self.tweet.retweeted = YES;
+    self.tweet.retweetCount += 1;
+    
+    [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
+        if(error){
+             NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
+        }
+        else{
+            NSLog(@"Successfully retweeted the following Tweet: %@", tweet.text);
+            self.tweet = tweet;
+            [self refreshView];
+        }
+    }];
+}
+
+-(void) refreshView {
+    if (self.tweet.retweeted == YES){
+        [self.tweetbutton setImage:[UIImage imageNamed:@"retweet-icon-green.png"] forState: UIControlStateNormal];
+    }else{
+        [self.tweetbutton setImage:[UIImage imageNamed:@"retweet-icon.png"] forState: UIControlStateNormal];
+    }
+    if (self.tweet.favorited == YES){
+        [self.likebutton setImage:[UIImage imageNamed:@"favor-icon-red.png"] forState: UIControlStateNormal];
+    }else{
+        [self.likebutton setImage:[UIImage imageNamed:@"favor-icon.png"] forState: UIControlStateNormal];
+    }
+}
+
 
 @end

@@ -21,7 +21,7 @@
 - (IBAction)tweetButton:(id)sender {
     
     
-    [[APIManager shared]postStatusWithText:@"This is my tweet 😀" completion:^(Tweet *tweet, NSError *error) {
+    [[APIManager shared]postStatusWithText: self.composeTweet.text completion:^(Tweet *tweet, NSError *error) {
         if(error){
             NSLog(@"Error composing Tweet: %@", error.localizedDescription);
         }

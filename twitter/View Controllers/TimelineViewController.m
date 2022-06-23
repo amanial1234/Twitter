@@ -34,8 +34,13 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
-    // Get timeline
+    [self fetchTweets];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchTweets) forControlEvents:UIControlEventValueChanged];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+
+}
+- (void) fetchTweets {
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
             self.arrayOfTweets = tweets;
@@ -44,11 +49,14 @@
                 NSString *text = tweet.text;
                 NSLog(@"%@", text);
             }
-            [self.tableView reloadData];
+        
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
+    
+        [self.tableView reloadData];
     }];
+    [self.refreshControl endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,7 +66,7 @@
 
 - (void)didTweet:(Tweet *)tweet{
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(fetchTweets) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
     [self.tableView addSubview:self.refreshControl];
     [self.arrayOfTweets addObject:tweet];
@@ -87,6 +95,8 @@
     cell.text.text = tweet.text;
     cell.retweet_count.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.favorite_count.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
+    cell.retweeted = tweet.retweeted;
+    cell.favorited = tweet.favorited;
     
     NSString *URLString = tweet.user.profilePicture;
     NSURL *url = [NSURL URLWithString:URLString];
