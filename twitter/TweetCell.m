@@ -13,8 +13,12 @@
 
 @implementation TweetCell
 
+
 - (void)awakeFromNib {
     [super awakeFromNib];
+    UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.profile_image_url_https addGestureRecognizer:profileTapGestureRecognizer];
+    [self.profile_image_url_https setUserInteractionEnabled:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -95,6 +99,13 @@ if (self.tweet.favorited == YES){
     self.favorite_count.text = [NSString stringWithFormat: @"%d", self.tweet.favoriteCount];
 }
 }
+
+
+
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    [self.delegate tweetCell:self didTap:self.tweet.user];
+}
+
 
 
 @end
