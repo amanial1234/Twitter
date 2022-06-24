@@ -9,7 +9,6 @@
 #import "Tweet.h"
 #import "User.h"
 
-
 @implementation Tweet
 - (instancetype) initWithDictionary:(NSDictionary *) dictionary{
     self = [super init];
@@ -26,7 +25,7 @@
         self.favorited = [dictionary[@"favorited"] boolValue];
         self.retweetCount = [dictionary[@"retweet_count"] intValue];
         self.retweeted = [dictionary[@"retweeted"] boolValue];
-
+        //Converts time
         NSDictionary *user = dictionary[@"user"];
         self.user = [[User alloc] initWithDictionary:user];
         NSString *createdAtOriginalString = dictionary[@"created_at"];
@@ -46,9 +45,7 @@
         } else {
             self.createdAtString = [NSString stringWithFormat:@"%lds", seconds];
         }
-
     }
-    
     return self;
 }
 
@@ -60,6 +57,4 @@
     }
     return tweets;
 }
-
-
 @end

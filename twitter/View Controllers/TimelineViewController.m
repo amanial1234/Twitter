@@ -26,7 +26,6 @@
 
 - (IBAction)didtapLogout:(UIButton *)sender;
 
-
 @end
 
 @implementation TimelineViewController
@@ -39,8 +38,8 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchTweets) forControlEvents:UIControlEventValueChanged];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
-
 }
+
 - (void) fetchTweets {
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
@@ -55,14 +54,12 @@
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
-    
     }];
     [self.refreshControl endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
 }
 
 - (void)didTweet:(Tweet *)tweet{
@@ -73,6 +70,7 @@
     [self.arrayOfTweets addObject:tweet];
     [self.tableView reloadData];
 }
+
 - (IBAction)didtapLogout:(UIButton *)sender {
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
@@ -85,6 +83,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.arrayOfTweets.count;
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -92,7 +91,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     Tweet *tweet = self.arrayOfTweets[indexPath.row];
-    
     //Get Objects
     cell.tweet = tweet;
     cell.name.text = tweet.user.name;
@@ -103,30 +101,30 @@
     cell.created_at.text = tweet.createdAtString;
     cell.retweeted = tweet.retweeted;
     cell.favorited = tweet.favorited;
-    
     //Get Image
     NSString *URLString = tweet.user.profilePicture;
     NSString *stringWithoutNormal = [URLString stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
     NSURL *urlNew = [NSURL URLWithString:stringWithoutNormal];
     [cell.profile_image_url_https setImageWithURL: urlNew];
+    //Makes image Circle
+    cell.profile_image_url_https.layer.cornerRadius = cell.profile_image_url_https.frame.size.height/2;
+    cell.profile_image_url_https.layer.masksToBounds = YES;
+    cell.profile_image_url_https.layer.borderWidth = 0;
     
     return cell;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showDetails"]){
+    if ([[segue identifier] isEqualToString:@"showDetails"]){//if going to details page
         TweetCell *cell = sender;
         NSIndexPath *indexpath = [self.tableView indexPathForCell:cell];
         Tweet *dataToPass = self.arrayOfTweets[indexpath.row];
         DetailViewController *detailVC = [segue destinationViewController];
         detailVC.tweeter = dataToPass;
-
-        
-    }else{
+    }else{//if going to compose
    UINavigationController *navigationController = [segue destinationViewController];
    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
    composeController.delegate = self;
     }
 }
-    
 @end
