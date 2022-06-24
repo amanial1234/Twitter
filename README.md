@@ -4,6 +4,10 @@ Twitter is a basic twitter app to read and compose tweets the [Twitter API](http
 
 Time spent: 28 hours spent in total
 
+https://imgur.com/a/yNlpq5C
+
+https://imgur.com/a/yNlpq5C.gif
+
 ## User Stories
 
 The following **core** features are completed:
