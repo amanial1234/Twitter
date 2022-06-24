@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *dvuser_name;
 @property (weak, nonatomic) IBOutlet UILabel *dvscreen_name;
 @property (weak, nonatomic) IBOutlet UIImageView *dvprofileView;
+@property (weak, nonatomic) IBOutlet UILabel *like_count;
+@property (weak, nonatomic) IBOutlet UILabel *retweet_count;
 
 @end
 
@@ -35,6 +37,14 @@
             [self refreshView];
         }
     }];
+}
+- (IBAction)backButton:(id)sender {
+//    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//    appDelegate.window.rootViewController = loginViewController;
+//    [[APIManager shared] logout];
 }
 - (IBAction)likebutton:(id)sender {
     self.tweeter.favorited = YES;
@@ -68,11 +78,16 @@
     self.dvtext.text = self.tweeter.text;
     self.dvuser_name.text = self.tweeter.user.name;
     self.dvscreen_name.text = self.tweeter.user.screenName;
+    self.retweet_count.text = [NSString stringWithFormat:@"%d", self.tweeter.retweetCount];
+    self.like_count.text = [NSString stringWithFormat:@"%d", self.tweeter.favoriteCount];
     
     NSString *URLString = self.tweeter.user.profilePicture;
-    NSURL *url = [NSURL URLWithString:URLString];
-    NSData *urlData = [NSData dataWithContentsOfURL:url];
-    self.dvprofileView.image = [UIImage imageWithData:urlData];
+
+    NSString *stringWithoutNormal = [URLString stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
+
+    NSURL *urlNew = [NSURL URLWithString:stringWithoutNormal];
+
+    [self.dvprofileView setImageWithURL: urlNew];
 
 }
 

@@ -85,24 +85,31 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.arrayOfTweets.count;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     Tweet *tweet = self.arrayOfTweets[indexPath.row];
     
+    //Get Objects
     cell.tweet = tweet;
     cell.name.text = tweet.user.name;
     cell.screen_name.text= tweet.user.screenName;
     cell.text.text = tweet.text;
     cell.retweet_count.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.favorite_count.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
+    cell.created_at.text = tweet.createdAtString;
     cell.retweeted = tweet.retweeted;
     cell.favorited = tweet.favorited;
     
+    //Get Image
     NSString *URLString = tweet.user.profilePicture;
-    NSURL *url = [NSURL URLWithString:URLString];
-    NSData *urlData = [NSData dataWithContentsOfURL:url];
-    cell.profile_image_url_https.image = [UIImage imageWithData:urlData];
+    NSString *stringWithoutNormal = [URLString stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
+    NSURL *urlNew = [NSURL URLWithString:stringWithoutNormal];
+    [cell.profile_image_url_https setImageWithURL: urlNew];
+    
     return cell;
 }
 
