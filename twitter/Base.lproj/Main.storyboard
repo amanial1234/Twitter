@@ -227,7 +227,7 @@
                     <navigationItem key="navigationItem" title="Home Timeline" id="MOc-fV-EZE">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="HZF-tq-fZZ">
                             <button key="customView" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="1Cg-6y-y85">
-                                <rect key="frame" x="16" y="12" width="77.5" height="32"/>
+                                <rect key="frame" x="16" y="11" width="77.5" height="34.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Logout"/>
@@ -414,7 +414,6 @@
                                 <rect key="frame" x="29" y="70" width="315" height="179"/>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -422,9 +421,8 @@
                                     <outlet property="delegate" destination="8mO-0l-Rwe" id="Kqz-3A-Rht"/>
                                 </connections>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Character Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDB-7P-CHT">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Character Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDB-7P-CHT">
                                 <rect key="frame" x="215" y="257" width="129" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -433,10 +431,13 @@
                         <viewLayoutGuide key="safeArea" id="AK2-SK-0xa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="AK2-SK-0xa" firstAttribute="bottom" secondItem="RYa-MZ-MCN" secondAttribute="bottom" constant="398" id="2Qx-VI-nvk"/>
-                            <constraint firstItem="RYa-MZ-MCN" firstAttribute="leading" secondItem="AK2-SK-0xa" secondAttribute="leading" constant="29" id="Tje-xZ-Ttw"/>
-                            <constraint firstItem="AK2-SK-0xa" firstAttribute="trailing" secondItem="RYa-MZ-MCN" secondAttribute="trailing" constant="31" id="e3S-Ec-g5F"/>
-                            <constraint firstItem="RYa-MZ-MCN" firstAttribute="top" secondItem="AK2-SK-0xa" secondAttribute="top" constant="14" id="zbv-fY-IO7"/>
+                            <constraint firstItem="RYa-MZ-MCN" firstAttribute="top" secondItem="AK2-SK-0xa" secondAttribute="top" constant="14" id="Q0B-gO-5Zf"/>
+                            <constraint firstItem="AK2-SK-0xa" firstAttribute="trailing" secondItem="RYa-MZ-MCN" secondAttribute="trailing" constant="31" id="bat-mo-6RF"/>
+                            <constraint firstItem="NDB-7P-CHT" firstAttribute="leading" secondItem="AK2-SK-0xa" secondAttribute="leading" constant="215" id="iKA-Oj-UZK"/>
+                            <constraint firstItem="NDB-7P-CHT" firstAttribute="top" secondItem="RYa-MZ-MCN" secondAttribute="bottom" constant="8" id="mRF-HF-yzh"/>
+                            <constraint firstItem="AK2-SK-0xa" firstAttribute="bottom" secondItem="NDB-7P-CHT" secondAttribute="bottom" constant="369" id="opI-Uf-vfK"/>
+                            <constraint firstItem="RYa-MZ-MCN" firstAttribute="trailing" secondItem="NDB-7P-CHT" secondAttribute="trailing" id="ppO-YL-Cgd"/>
+                            <constraint firstItem="RYa-MZ-MCN" firstAttribute="leading" secondItem="AK2-SK-0xa" secondAttribute="leading" constant="29" id="vsb-DZ-Yag"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="OrO-tH-EdI">
